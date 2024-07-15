@@ -1,9 +1,14 @@
 from fastapi import FastAPI
+from api.routes import router
+from db import base, session
 
 app = FastAPI()
 
-@app.get("/")
-def read_root():
-    return {"Hello": "Willow"}
+app.include_router(router)
+
+@app.on_event("startup")
+def on_startup():
+    base.Base.metadata.create_all(bind=session.engine)
+
 
 

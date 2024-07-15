@@ -1,12 +1,30 @@
 version: '3'
 
 services:
+  db:
+    image: postgres:latest
+    platform: linux/amd64
+    env_file:
+      - ./local.env
+    ports:
+      - "5432:5432"
+    volumes:
+      - ./db-data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U $$POSTGRES_USER -d $$POSTGRES_DB"]
+      interval: 10s
+      timeout: 5s
+      retries: 3
+
   backend:
     build: ./backend
     ports:
       - "8000:80"
     volumes:
       - ./backend:/app
+    depends_on:
+      db:
+        condition: service_healthy
 
   frontend:
     build:
@@ -21,6 +39,7 @@ services:
       - "5173:5173"
 
 volumes:
+  db-data: 
   backend-code: 
   frontend-code: 
   node-modules:

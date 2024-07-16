@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 
-import { Button, Form, Input, InputNumber, Select } from "antd";
+import { Button, Form, Input, InputNumber } from "antd";
 
 const { TextArea } = Input;
 
@@ -36,14 +36,14 @@ function SitesForm({ onCreate, onEdit, selectedSite }) {
         </Form.Item>
 
         <Form.Item label="Longitude" name="longitude">
-          <InputNumber placeholder="12.5" />
+          <InputNumber placeholder="12.5" min={-180} max={180} />
         </Form.Item>
         <Form.Item label="Latitude" name="latitude">
-          <InputNumber placeholder="13.56" />
+          <InputNumber placeholder="13.56" min={-90} max={90} />
         </Form.Item>
         <Form.Item>
           <Button type="primary" htmlType="submit">
-            Submit
+            {selectedSite ? "Update" : "Submit"}
           </Button>
         </Form.Item>
       </Form>

@@ -18,9 +18,15 @@ function SitesList({ data, onDelete, onEdit }) {
       key: "description",
     },
     {
-      title: "Phase",
-      dataIndex: "phase",
-      key: "phase",
+      title: "Location",
+      
+      key: "location",
+      render: (_, record) => (
+        <Space size="middle">
+        <span>{record.latitude}</span>
+        <span>{record.longitude}</span>
+        </Space>
+      )
     },
     {
       title: "Action",

@@ -7,6 +7,7 @@ import SitesForm from "../components/sites/SitesForm";
 import { deleteSite, createSite, editSite } from "../services/api";
 
 import { Button } from "antd";
+import Map from "../components/sites/Map";
 
 function ProjectsViewPage() {
   const { id } = useParams();
@@ -19,7 +20,6 @@ function ProjectsViewPage() {
 
   const [page, setPage] = useState("list-page");
 
-  const [selectedProject, setSelectedProject] = useState();
   const [selectedSite, setSelectedSite] = useState();
 
   useEffect(() => {
@@ -54,7 +54,7 @@ function ProjectsViewPage() {
     const index = sites.findIndex((site) => site.id === siteId);
     const newList = [
       ...sites.slice(0, index),
-      values,
+      { id: siteId, ...values },
       ...sites.slice(index + 1),
     ];
     setSites(newList);
@@ -88,6 +88,7 @@ function ProjectsViewPage() {
               setPage("create-page");
             }}
           />
+          {loading ? "" : <Map sites={sites} project={currentProject} />}
         </>
       ) : (
         <SitesForm

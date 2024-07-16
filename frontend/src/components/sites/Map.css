@@ -1,0 +1,14 @@
+.map-container {
+    width: 50%;
+    height: 400px; /* Adjust this to control the height of the map */
+    border: 1px solid #ccc; /* Optional: Add a border to the map container */
+}
+
+
+.custom-marker {
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    background-color: purple; /* Custom marker color */
+    border: 2px solid white;
+}

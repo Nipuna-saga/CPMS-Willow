@@ -66,10 +66,10 @@ function ProjectForm({ onCreate, onEdit, selectedProject }) {
           </Select>
         </Form.Item>
         <Form.Item label="Longitude" name="longitude">
-          <InputNumber placeholder="12.5" />
+          <InputNumber placeholder="12.5" min={-180} max={180} />
         </Form.Item>
         <Form.Item label="Latitude" name="latitude">
-          <InputNumber placeholder="13.56" />
+          <InputNumber placeholder="13.56" min={-90} max={90} />
         </Form.Item>
         <Form.Item>
           <Button type="primary" htmlType="submit">

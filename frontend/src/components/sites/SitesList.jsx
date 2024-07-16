@@ -11,22 +11,23 @@ function SitesList({ data, onDelete, onEdit }) {
       title: "Name",
       dataIndex: "name",
       key: "name",
+      width:'20%'
     },
     {
       title: "Description",
       dataIndex: "description",
       key: "description",
+      width:'30%'
     },
     {
       title: "Location",
-      
       key: "location",
       render: (_, record) => (
         <Space size="middle">
-        <span>{record.latitude}</span>
-        <span>{record.longitude}</span>
+          <span>{record.latitude}</span>
+          <span>{record.longitude}</span>
         </Space>
-      )
+      ),
     },
     {
       title: "Action",

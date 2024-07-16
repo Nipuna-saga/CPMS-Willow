@@ -1,5 +1,5 @@
 import React from "react";
-import { Table, Space, Button } from "antd";
+import { Table, Space, Button, Tag } from "antd";
 
 import { useNavigate, useLocation } from "react-router-dom";
 
@@ -11,16 +11,29 @@ function ProjectsList({ data, onDelete, onEdit }) {
       title: "Name",
       dataIndex: "name",
       key: "name",
+      width: "20%",
     },
     {
       title: "Description",
       dataIndex: "description",
       key: "description",
+      width: "30%",
+    },
+    {
+      title: "Location",
+      key: "location",
+      render: (_, record) => (
+        <Space size="middle">
+          <span>{record.latitude}</span>
+          <span>{record.longitude}</span>
+        </Space>
+      ),
     },
     {
       title: "Phase",
       dataIndex: "phase",
       key: "phase",
+      render: (item, record) => <Tag color="green">{item.toUpperCase()}</Tag>,
     },
     {
       title: "Action",

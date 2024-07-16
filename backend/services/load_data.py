@@ -19,7 +19,7 @@ def create_initial_data(db: Session):
         name="Moo Moo Meadows",
         description="A countryside track featuring rolling hills, barns, and Moo Moo cows, providing a scenic and pastoral racing experience.",
         latitude=34.6678123,
-        longitude=135.4309874,
+        longitude=165.4309874,
         project=project1
     )
     site2 = Site(

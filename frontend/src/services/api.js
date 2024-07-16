@@ -29,4 +29,35 @@ const deleteProject = async (id) => {
   return response;
 };
 
-export { getProjects, deleteProject, createProject, editProject, getProject };
+const createSite = async (projectId, values) => {
+  const response = await axios.post(
+    `${BASE_URL}/projects/projects/${projectId}/sites`,
+    values
+  );
+  return response;
+};
+
+const editSite = async (projectId, siteId, values) => {
+  const response = await axios.put(
+    `${BASE_URL}/projects/projects/${projectId}/sites/${siteId}`,
+    values
+  );
+  return response;
+};
+const deleteSite = async (projectId, siteId, values) => {
+  const response = await axios.delete(
+    `${BASE_URL}/projects/projects/${projectId}/sites/${siteId}`
+  );
+  return response;
+};
+
+export {
+  getProjects,
+  deleteProject,
+  createProject,
+  editProject,
+  getProject,
+  createSite,
+  editSite,
+  deleteSite,
+};

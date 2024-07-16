@@ -1,5 +1,5 @@
 from pydantic import BaseModel
-from typing import Optional
+from typing import Optional, List
 from enum import Enum
 
 
@@ -16,6 +16,25 @@ class ProjectPhase(str, Enum):
     COMMISSIONING = "Commissioning"
     OPERATIONAL = "Operational"
     EXPANSION_UPGRADES = "Expansion and Upgrades"
+
+
+class SiteBase(BaseModel):
+    name: str
+    description: str
+    latitude: Optional[float] = None
+    longitude: Optional[float] = None
+
+
+class SiteCreate(SiteBase):
+    pass
+
+
+class Site(SiteBase):
+    id: int
+    project_id: int
+
+    class Config:
+        orm_mode = True
 
 
 class ProjectBase(BaseModel):
@@ -40,6 +59,7 @@ class ProjectUpdate(ProjectBase):
 
 class Project(ProjectBase):
     id: int
+    sites: List[Site] = []
 
     class Config:
         orm_mode = True

@@ -3,7 +3,8 @@ import { BrowserRouter, Routes, Route, Outlet } from "react-router-dom";
 import SitesPage from "./pages/SitesPage";
 import LandingPage from "./pages/LandingPage";
 import ProjectsPage from "./pages/ProjectsPage";
-import ProjectForm from "./components/projects/ProjectForm";
+import ProjectsViewPage from "./pages/ProjectsViewPage";
+
 
 function App() {
   return (
@@ -17,6 +18,7 @@ function App() {
           {/* <Route element={<RequiredAuth />}> */}
           <Route path="sites" element={<SitesPage />} />
           <Route path="projects" element={<ProjectsPage />} />
+          <Route path="projects/:id" element={<ProjectsViewPage />} />
         </Route>
         {/* </Route> */}
       </Routes>

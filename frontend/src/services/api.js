@@ -7,6 +7,11 @@ const getProjects = async () => {
   return response;
 };
 
+const getProject = async (id) => {
+  const response = await axios.get(`${BASE_URL}/projects/projects/${id}`);
+  return response;
+};
+
 const createProject = async (values) => {
   const response = await axios.post(`${BASE_URL}/projects/projects`, values);
   return response;
@@ -24,4 +29,4 @@ const deleteProject = async (id) => {
   return response;
 };
 
-export { getProjects, deleteProject, createProject, editProject };
+export { getProjects, deleteProject, createProject, editProject, getProject };

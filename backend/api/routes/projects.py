@@ -1,21 +1,24 @@
 from fastapi import APIRouter, Depends, HTTPException
 from sqlalchemy.orm import Session
 from typing import List
-from schemas.project import Project, ProjectCreate, ProjectUpdate
+from schemas.project import Project, ProjectCreate, ProjectUpdate, SiteCreate, Site
 from services import project as project_service
 from api.deps import get_db
 from sqlalchemy.exc import NoResultFound
 
 router = APIRouter()
 
+
 @router.get("/projects/", response_model=List[Project])
 def read_projects(skip: int = 0, limit: int = 10, db: Session = Depends(get_db)):
     projects = project_service.get_projects(db, skip=skip, limit=limit)
     return projects
 
+
 @router.post("/projects/", response_model=Project)
 def create_project(project: ProjectCreate, db: Session = Depends(get_db)):
     return project_service.create_project(db=db, project=project)
+
 
 @router.get("/projects/{project_id}", response_model=Project)
 def read_project(project_id: int, db: Session = Depends(get_db)):
@@ -24,12 +27,18 @@ def read_project(project_id: int, db: Session = Depends(get_db)):
         raise HTTPException(status_code=404, detail="Project not found")
     return project
 
+
 @router.put("/projects/{project_id}", response_model=Project)
-def update_project(project_id: int, project: ProjectUpdate, db: Session = Depends(get_db)):
+def update_project(
+    project_id: int, project: ProjectUpdate, db: Session = Depends(get_db)
+):
     try:
-        return project_service.update_project(db=db, project_id=project_id, project_update=project)
+        return project_service.update_project(
+            db=db, project_id=project_id, project_update=project
+        )
     except NoResultFound as e:
         raise HTTPException(status_code=404, detail=str(e))
+
 
 @router.delete("/projects/{project_id}", response_model=Project)
 def delete_project(project_id: int, db: Session = Depends(get_db)):
@@ -38,3 +47,29 @@ def delete_project(project_id: int, db: Session = Depends(get_db)):
     except NoResultFound as e:
         raise HTTPException(status_code=404, detail=str(e))
 
+
+@router.post("/projects/{project_id}/sites/", response_model=Site)
+def create_site_for_project(
+    project_id: int, site: SiteCreate, db: Session = Depends(get_db)
+):  
+    print(site)
+    return project_service.create_site(db=db, site=site, project_id=project_id)
+
+@router.put("/projects/{project_id}/sites/{site_id}", response_model=Site)
+def update_site_for_project(
+    project_id: int, site_id: int, site: SiteCreate, db: Session = Depends(get_db)
+):
+    updated_site = project_service.update_site(db=db, project_id=project_id, site_id=site_id, site_update=site)
+    if updated_site is None:
+        raise HTTPException(status_code=404, detail="Site not found")
+    return updated_site
+
+
+@router.delete("/projects/{project_id}/sites/{site_id}", response_model=Site)
+def delete_site_for_project(
+    project_id: int, site_id: int, db: Session = Depends(get_db)
+):
+    site = project_service.delete_site(db=db, project_id=project_id, site_id=site_id)
+    if site is None:
+        raise HTTPException(status_code=404, detail="Site not found")
+    return site

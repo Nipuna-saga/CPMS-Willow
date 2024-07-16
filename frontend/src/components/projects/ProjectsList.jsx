@@ -1,7 +1,11 @@
 import React from "react";
 import { Table, Space, Button } from "antd";
 
+import { useNavigate, useLocation } from "react-router-dom";
+
 function ProjectsList({ data, onDelete, onEdit }) {
+  const navigate = useNavigate();
+  let location = useLocation();
   const columns = [
     {
       title: "Name",
@@ -23,6 +27,14 @@ function ProjectsList({ data, onDelete, onEdit }) {
       key: "action",
       render: (_, record) => (
         <Space size="middle">
+          <Button
+            type="primary"
+            size="small"
+            onClick={() => navigate(`${location.pathname}/${record.id}`)}
+          >
+            View
+          </Button>
+
           <Button type="primary" size="small" onClick={() => onEdit(record.id)}>
             Edit
           </Button>

@@ -1,7 +1,8 @@
-from sqlalchemy import Column, Integer, String,  Float, Enum
-
+from sqlalchemy import Column, Integer, String, ForeignKey, Float, Enum
+from sqlalchemy.orm import relationship
 from db.base import Base
 from enum import Enum as PyEnum
+
 
 class ProjectPhase(PyEnum):
     PLANNING = "Planning"
@@ -17,6 +18,7 @@ class ProjectPhase(PyEnum):
     OPERATIONAL = "Operational"
     EXPANSION_UPGRADES = "Expansion and Upgrades"
 
+
 class Project(Base):
     __tablename__ = "projects"
 
@@ -26,4 +28,17 @@ class Project(Base):
     phase = Column(Enum(ProjectPhase), nullable=False)
     latitude = Column(Float, nullable=True)
     longitude = Column(Float, nullable=True)
+    sites = relationship("Site", back_populates="project")
 
+
+class Site(Base):
+    __tablename__ = "sites"
+
+    id = Column(Integer, primary_key=True, index=True)
+    name = Column(String, index=True, nullable=False)
+    description = Column(String, nullable=False)
+    latitude = Column(Float, nullable=True)
+    longitude = Column(Float, nullable=True)
+    project_id = Column(Integer, ForeignKey("projects.id"))
+
+    project = relationship("Project", back_populates="sites")

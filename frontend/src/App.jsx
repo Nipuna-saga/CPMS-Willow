@@ -1,10 +1,10 @@
 import { BrowserRouter, Routes, Route, Outlet } from "react-router-dom";
 
-import SitesPage from "./pages/SitesPage";
 import LandingPage from "./pages/LandingPage";
 import ProjectsPage from "./pages/ProjectsPage";
 import ProjectsViewPage from "./pages/ProjectsViewPage";
-
+import "./App.css";
+import HeaderComponent from "./components/Header";
 
 function App() {
   return (
@@ -12,15 +12,11 @@ function App() {
       <Routes>
         <Route path="/" element={<Layout />}>
           <Route path="" element={<LandingPage />} />
-
-          {/* <Route path="login" element={<LoginPage />} /> */}
-
-          {/* <Route element={<RequiredAuth />}> */}
-          <Route path="sites" element={<SitesPage />} />
-          <Route path="projects" element={<ProjectsPage />} />
-          <Route path="projects/:id" element={<ProjectsViewPage />} />
+          <Route path="projects" element={<HeaderComponent />}>
+            <Route path="" element={<ProjectsPage />} />
+            <Route path=":id" element={<ProjectsViewPage />} />
+          </Route>
         </Route>
-        {/* </Route> */}
       </Routes>
     </BrowserRouter>
   );

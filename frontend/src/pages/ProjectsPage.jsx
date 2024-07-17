@@ -8,11 +8,12 @@ import {
 import ProjectsList from "../components/projects/ProjectsList";
 import { Button } from "antd";
 import ProjectForm from "../components/projects/ProjectForm";
+import { PlusOutlined } from "@ant-design/icons";
 
 function ProjectsPage() {
   const [projects, setProjects] = useState([]);
-  const [page, setPage] = useState("list-page");
-
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [title, setTitle] = useState("");
   const [selectedProject, setSelectedProject] = useState();
 
   useEffect(() => {
@@ -38,50 +39,58 @@ function ProjectsPage() {
     const { data } = await createProject(values);
     const newList = [...projects, data];
     setProjects(newList);
-    setPage("list-page");
+    setIsModalOpen(false);
   };
 
   const handleOnEdit = async ({ id, values }) => {
     await editProject(id, values);
-    const index = projects.findIndex((project) => project.id !== id);
+    const index = projects.findIndex((project) => project.id === id);
     const newList = [
       ...projects.slice(0, index),
       values,
       ...projects.slice(index + 1),
     ];
     setProjects(newList);
-    setPage("list-page");
+    setIsModalOpen(false);
   };
 
   return (
     <>
-      {page === "list-page" ? (
-        <>
-          <Button
-            onClick={() => {
-              setSelectedProject(null);
-              setPage("create-page");
-            }}
-          >
-            Create
-          </Button>
-          <ProjectsList
-            data={projects}
-            onDelete={handleOnDelete}
-            onEdit={(id) => {
-              const project = projects.find((project) => project.id === id);
-              setSelectedProject(project);
-              setPage("create-page");
-            }}
-          />
-        </>
-      ) : (
+      <div className="content-header-settings">
+        <h2>Projects</h2>
+        <Button
+          type="primary"
+          onClick={() => {
+            setSelectedProject(null);
+            setIsModalOpen(true);
+            setTitle("Create New Project");
+          }}
+          icon={<PlusOutlined />}
+        >
+          Create New Project
+        </Button>
+      </div>
+
+      <ProjectsList
+        data={projects}
+        onDelete={handleOnDelete}
+        onEdit={(id) => {
+          const project = projects.find((project) => project.id === id);
+          setSelectedProject(project);
+          setIsModalOpen(true);
+          setTitle("Edit Project Details");
+        }}
+      />
+      {isModalOpen ? (
         <ProjectForm
+          title={title}
+          setIsModalOpen={setIsModalOpen}
+          isModalOpen={isModalOpen}
           selectedProject={selectedProject}
           onCreate={handleOnCreate}
           onEdit={handleOnEdit}
         />
-      )}
+      ) : null}
     </>
   );
 }

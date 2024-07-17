@@ -1,11 +1,18 @@
 import React, { useEffect } from "react";
 
-import { Button, Form, Input, InputNumber, Select } from "antd";
+import { Button, Form, Input, InputNumber, Select, Modal, Space } from "antd";
 
 const { TextArea } = Input;
 const { Option } = Select;
 
-function ProjectForm({ onCreate, onEdit, selectedProject }) {
+function ProjectForm({
+  onCreate,
+  onEdit,
+  selectedProject,
+  isModalOpen,
+  setIsModalOpen,
+  title,
+}) {
   const [form] = Form.useForm();
 
   useEffect(() => {
@@ -21,14 +28,22 @@ function ProjectForm({ onCreate, onEdit, selectedProject }) {
     }
   };
   return (
-    <div
-      style={{
-        padding: "20px",
-        width: "50%",
-        background: "gray",
-      }}
+    <Modal
+      title={<p>{title}</p>}
+      footer={<></>}
+      open={isModalOpen}
+      onCancel={() => setIsModalOpen(false)}
     >
-      <Form form={form} onFinish={onFinish}>
+      <Form
+        form={form}
+        onFinish={onFinish}
+        labelCol={{
+          span: 5,
+        }}
+        wrapperCol={{
+          span: 19,
+        }}
+      >
         <Form.Item label="Name" name="name">
           <Input placeholder="Diamond Dogs Mother Base" />
         </Form.Item>
@@ -71,13 +86,21 @@ function ProjectForm({ onCreate, onEdit, selectedProject }) {
         <Form.Item label="Latitude" name="latitude">
           <InputNumber placeholder="13.56" min={-90} max={90} />
         </Form.Item>
-        <Form.Item>
-          <Button type="primary" htmlType="submit">
-            Submit
-          </Button>
+        <Form.Item
+          wrapperCol={{
+            offset: 12,
+          }}
+        >
+          <Space>
+            <Button htmlType="reset">Reset</Button>
+            <Button onClick={() => setIsModalOpen(false)}>Cancel</Button>
+            <Button type="primary" htmlType="submit">
+              {selectedProject ? "Update" : "Create"}
+            </Button>
+          </Space>
         </Form.Item>
       </Form>
-    </div>
+    </Modal>
   );
 }
 

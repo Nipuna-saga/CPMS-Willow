@@ -1,10 +1,17 @@
 import React, { useEffect } from "react";
 
-import { Button, Form, Input, InputNumber } from "antd";
+import { Button, Form, Input, InputNumber, Modal, Space } from "antd";
 
 const { TextArea } = Input;
 
-function SitesForm({ onCreate, onEdit, selectedSite }) {
+function SitesForm({
+  onCreate,
+  onEdit,
+  selectedSite,
+  isModalOpen,
+  setIsModalOpen,
+  title,
+}) {
   const [form] = Form.useForm();
 
   useEffect(() => {
@@ -20,14 +27,29 @@ function SitesForm({ onCreate, onEdit, selectedSite }) {
     }
   };
   return (
-    <div
-      style={{
-        padding: "20px",
-        width: "50%",
-        background: "gray",
-      }}
+    // <div
+    //   style={{
+    //     padding: "20px",
+    //     width: "50%",
+    //     background: "gray",
+    //   }}
+    // >
+    <Modal
+      title={<p>{title}</p>}
+      footer={<></>}
+      open={isModalOpen}
+      onCancel={() => setIsModalOpen(false)}
     >
-      <Form form={form} onFinish={onFinish}>
+      <Form
+        form={form}
+        onFinish={onFinish}
+        labelCol={{
+          span: 5,
+        }}
+        wrapperCol={{
+          span: 19,
+        }}
+      >
         <Form.Item label="Name" name="name">
           <Input placeholder="Diamond Dogs Mother Base" />
         </Form.Item>
@@ -41,13 +63,21 @@ function SitesForm({ onCreate, onEdit, selectedSite }) {
         <Form.Item label="Latitude" name="latitude">
           <InputNumber placeholder="13.56" min={-90} max={90} />
         </Form.Item>
-        <Form.Item>
-          <Button type="primary" htmlType="submit">
-            {selectedSite ? "Update" : "Submit"}
-          </Button>
+        <Form.Item
+          wrapperCol={{
+            offset: 12,
+          }}
+        >
+          <Space>
+            <Button htmlType="reset">Reset</Button>
+            <Button onClick={() => setIsModalOpen(false)}>Cancel</Button>
+            <Button type="primary" htmlType="submit">
+              {selectedSite ? "Update" : "Submit"}
+            </Button>
+          </Space>
         </Form.Item>
       </Form>
-    </div>
+    </Modal>
   );
 }
 

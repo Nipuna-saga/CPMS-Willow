@@ -1,7 +1,9 @@
 .map-container {
-    width: 50%;
-    height: 400px; /* Adjust this to control the height of the map */
+    width: 70%;
+    height: 500px; /* Adjust this to control the height of the map */
     border: 1px solid #ccc; /* Optional: Add a border to the map container */
+    margin: auto;
+    border-radius: 8px;
 }
 
 

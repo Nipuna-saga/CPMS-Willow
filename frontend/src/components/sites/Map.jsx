@@ -12,7 +12,7 @@ const Map = ({ sites, project }) => {
       container: mapContainerRef.current,
       style: "https://demotiles.maplibre.org/style.json",
       center: [-74.5, 40],
-      zoom: 0,
+      zoom: 1,
     });
 
     map.addControl(new maplibregl.NavigationControl(), "top-right");

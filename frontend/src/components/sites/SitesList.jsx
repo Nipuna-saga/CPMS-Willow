@@ -11,13 +11,13 @@ function SitesList({ data, onDelete, onEdit }) {
       title: "Name",
       dataIndex: "name",
       key: "name",
-      width:'20%'
+      width: "20%",
     },
     {
       title: "Description",
       dataIndex: "description",
       key: "description",
-      width:'30%'
+      width: "30%",
     },
     {
       title: "Location",
@@ -34,14 +34,6 @@ function SitesList({ data, onDelete, onEdit }) {
       key: "action",
       render: (_, record) => (
         <Space size="middle">
-          <Button
-            type="primary"
-            size="small"
-            onClick={() => navigate(`${location.pathname}/${record.id}`)}
-          >
-            View
-          </Button>
-
           <Button type="primary" size="small" onClick={() => onEdit(record.id)}>
             Edit
           </Button>

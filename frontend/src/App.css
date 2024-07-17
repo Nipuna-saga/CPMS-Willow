@@ -1,0 +1,38 @@
+.main-layout {
+  border-radius: 8px;
+  overflow: hidden;
+  width: calc(100% - 8px);
+  max-width: calc(100%-8px);
+}
+
+.header-style {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  color: #fff;
+  height: 60px;
+  background-color: #000aa0;
+}
+
+.content-style {
+  text-align: center;
+  min-height: calc(100vh - 138px);
+  padding: 24px;
+  color: #444444;
+  background-color: #eeeeee;
+}
+
+.footer-style {
+  height: 60px;
+  text-align: center;
+  color: #fff;
+  background-color: #cccccc;
+}
+
+.content-header-settings {
+  height: 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  height: 60px;
+}

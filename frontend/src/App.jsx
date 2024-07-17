@@ -1,4 +1,10 @@
-import { BrowserRouter, Routes, Route, Outlet } from "react-router-dom";
+import {
+  BrowserRouter,
+  Routes,
+  Route,
+  Outlet,
+  Navigate,
+} from "react-router-dom";
 
 import LandingPage from "./pages/LandingPage";
 import ProjectsPage from "./pages/ProjectsPage";
@@ -11,7 +17,7 @@ function App() {
     <BrowserRouter>
       <Routes>
         <Route path="/" element={<Layout />}>
-          <Route path="" element={<LandingPage />} />
+          <Route path="" element={<Navigate to="projects" />} />
           <Route path="projects" element={<HeaderComponent />}>
             <Route path="" element={<ProjectsPage />} />
             <Route path=":id" element={<ProjectsViewPage />} />
